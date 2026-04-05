@@ -1,0 +1,15 @@
+{
+  "name": "echarts-itextpdf-render-service",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local Apache ECharts SSR render service for echarts-itextpdf demos.",
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "echarts": "^5.5.0",
+    "echarts-gl": "^2.0.9",
+    "puppeteer-core": "^24.6.1"
+  }
+}
