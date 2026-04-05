@@ -28,7 +28,9 @@ The gallery now includes:
 
 - line
 - pie / donut
+- radar
 - scatter
 - heatmap
 - candlestick
+- funnel
 - 3D bar

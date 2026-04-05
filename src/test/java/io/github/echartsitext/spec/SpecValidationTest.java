@@ -77,6 +77,9 @@ class SpecValidationTest {
         assertTrue(!Modifier.isPublic(singleConstructor(TooltipSpec.class).getModifiers()));
         assertTrue(!Modifier.isPublic(singleConstructor(TitleSpec.class).getModifiers()));
         assertTrue(!Modifier.isPublic(singleConstructor(TextStyleSpec.class).getModifiers()));
+        assertTrue(!Modifier.isPublic(singleConstructor(RadarSpec.class).getModifiers()));
+        assertTrue(!Modifier.isPublic(singleConstructor(RadarSeriesSpec.class).getModifiers()));
+        assertTrue(!Modifier.isPublic(singleConstructor(FunnelSeriesSpec.class).getModifiers()));
     }
 
     private static Constructor<?> singleConstructor(Class<?> type) {
@@ -144,6 +147,30 @@ class SpecValidationTest {
                 .heatmapSeries(Collections.singletonList(
                         HeatmapSeriesSpec.builder()
                                 .data(Collections.singletonList(new HeatmapPoint(0, 0, 1)))
+                                .build()
+                ))
+                .build());
+
+        assertThrows(IllegalArgumentException.class, () -> ChartSpec.builder(ChartType.RADAR)
+                .radar(RadarSpec.builder()
+                        .indicators(Collections.singletonList(RadarIndicatorSpec.builder("A").max(100d).build()))
+                        .build())
+                .funnelSeries(Collections.singletonList(
+                        FunnelSeriesSpec.builder()
+                                .data(Collections.singletonList(FunnelSliceSpec.builder("A", 10).build()))
+                                .build()
+                ))
+                .build());
+
+        assertThrows(IllegalArgumentException.class, () -> ChartSpec.builder(ChartType.FUNNEL)
+                .radarSeries(Collections.singletonList(
+                        RadarSeriesSpec.builder()
+                                .data(Collections.singletonList(RadarValueSpec.builder("A", Arrays.asList(1d, 2d)).build()))
+                                .build()
+                ))
+                .funnelSeries(Collections.singletonList(
+                        FunnelSeriesSpec.builder()
+                                .data(Collections.singletonList(FunnelSliceSpec.builder("A", 10).build()))
                                 .build()
                 ))
                 .build());

@@ -60,29 +60,41 @@ public final class GalleryPdfMain {
                             .fitWidth()
                             .caption("Figure 2. A typed donut chart with named slices and automatic legend data.")
                             .build(),
+                    EchartsFigure.of(buildRadarChart())
+                            .renderer(renderer)
+                            .autoFormat()
+                            .fitWidth()
+                            .caption("Figure 3. A typed radar chart for multi-metric comparison without raw option maps.")
+                            .build(),
                     EchartsFigure.of(buildScatterChart())
                             .renderer(renderer)
                             .autoFormat()
                             .fitWidth()
-                            .caption("Figure 3. A 2D scatter chart using visualMap for value-based coloring.")
+                            .caption("Figure 4. A 2D scatter chart using visualMap for value-based coloring.")
                             .build(),
                     EchartsFigure.of(buildHeatmapChart())
                             .renderer(renderer)
                             .autoFormat()
                             .fitWidth()
-                            .caption("Figure 4. A typed heatmap chart with category axes and visual mapping.")
+                            .caption("Figure 5. A typed heatmap chart with category axes and visual mapping.")
                             .build(),
                     EchartsFigure.of(buildCandlestickChart())
                             .renderer(renderer)
                             .autoFormat()
                             .fitWidth()
-                            .caption("Figure 5. A typed candlestick chart with category labels and OHLC data.")
+                            .caption("Figure 6. A typed candlestick chart with category labels and OHLC data.")
+                            .build(),
+                    EchartsFigure.of(buildFunnelChart())
+                            .renderer(renderer)
+                            .autoFormat()
+                            .fitWidth()
+                            .caption("Figure 7. A typed funnel chart for staged conversion analysis.")
                             .build(),
                     EchartsFigure.of(buildThreeDimensionalChart())
                             .renderer(renderer)
                             .autoFormat()
                             .fitWidth()
-                            .caption("Figure 6. A 3D bar chart rendered as PNG and embedded as an iText figure.")
+                            .caption("Figure 8. A 3D bar chart rendered as PNG and embedded as an iText figure.")
                             .build()
             );
 
@@ -217,6 +229,21 @@ public final class GalleryPdfMain {
                 .build();
     }
 
+    private static ChartSpec buildRadarChart() {
+        return Charts.radar()
+                .size(760, 460)
+                .title("Radar Chart")
+                .indicator("Purity", 100d)
+                .indicator("Yield", 100d)
+                .indicator("Stability", 100d)
+                .indicator("Throughput", 100d)
+                .indicator("Recovery", 100d)
+                .value("Batch A", Arrays.asList(92d, 86d, 88d, 81d, 90d))
+                .value("Batch B", Arrays.asList(84d, 91d, 80d, 88d, 78d))
+                .series(series -> series.areaOpacity(0.10d))
+                .build();
+    }
+
     private static ChartSpec buildCandlestickChart() {
         return Charts.candlestick()
                 .size(960, 420)
@@ -234,6 +261,19 @@ public final class GalleryPdfMain {
                         new CandlestickValue(29, 27, 26, 32)
                 ))
                 .module(DataZoomModule.inside().start(0).end(100).build())
+                .build();
+    }
+
+    private static ChartSpec buildFunnelChart() {
+        return Charts.funnel()
+                .size(760, 440)
+                .title("Funnel Chart")
+                .slice("Leads", 1200)
+                .slice("Qualified", 860)
+                .slice("Proposal", 430)
+                .slice("Negotiation", 280)
+                .slice("Won", 170)
+                .series(series -> series.gap(4).sort("descending"))
                 .build();
     }
 

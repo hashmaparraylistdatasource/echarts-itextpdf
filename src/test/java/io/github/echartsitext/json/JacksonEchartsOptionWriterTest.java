@@ -219,6 +219,49 @@ class JacksonEchartsOptionWriterTest {
     }
 
     @Test
+    void shouldGenerateTypedRadarOption() throws Exception {
+        ChartSpec spec = Charts.radar()
+                .title("Radar Chart")
+                .indicator("Purity", 100d)
+                .indicator("Yield", 100d)
+                .indicator("Stability", 100d)
+                .value("Batch A", Arrays.asList(92d, 86d, 88d))
+                .value("Batch B", Arrays.asList(84d, 90d, 81d))
+                .series(series -> series.areaOpacity(0.12d))
+                .build();
+
+        String json = new JacksonEchartsOptionWriter().write(spec);
+        JsonNode root = new ObjectMapper().readTree(json);
+
+        assertEquals("radar", root.path("series").get(0).path("type").asText());
+        assertEquals("Purity", root.path("radar").path("indicator").get(0).path("name").asText());
+        assertEquals("Batch A", root.path("legend").path("data").get(0).asText());
+        assertEquals(88d, root.path("series").get(0).path("data").get(0).path("value").get(2).asDouble(), 0.0001d);
+        assertTrue(root.path("grid").isMissingNode());
+    }
+
+    @Test
+    void shouldGenerateTypedFunnelOption() throws Exception {
+        ChartSpec spec = Charts.funnel()
+                .title("Funnel Chart")
+                .slice("Leads", 1200)
+                .slice("Qualified", 860)
+                .slice("Proposal", 430)
+                .slice("Won", 170)
+                .series(series -> series.gap(4).sort("descending"))
+                .build();
+
+        String json = new JacksonEchartsOptionWriter().write(spec);
+        JsonNode root = new ObjectMapper().readTree(json);
+
+        assertEquals("funnel", root.path("series").get(0).path("type").asText());
+        assertEquals("Qualified", root.path("legend").path("data").get(1).asText());
+        assertEquals(4, root.path("series").get(0).path("gap").asInt());
+        assertEquals(170d, root.path("series").get(0).path("data").get(3).path("value").asDouble(), 0.0001d);
+        assertTrue(root.path("grid").isMissingNode());
+    }
+
+    @Test
     void shouldGenerateTypedHeatmapOption() throws Exception {
         ChartSpec spec = Charts.heatmap()
                 .title("Heatmap Chart")

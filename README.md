@@ -41,6 +41,8 @@ First-class typed support:
 - bar
 - scatter
 - pie
+- radar
+- funnel
 - heatmap
 - candlestick
 - bar3D
@@ -113,6 +115,8 @@ Current typed DSL coverage includes:
 - `Charts.bar()`
 - `Charts.scatter()`
 - `Charts.pie()`
+- `Charts.radar()`
+- `Charts.funnel()`
 - `Charts.heatmap()`
 - `Charts.candlestick()`
 - `Charts.bar3D()`
@@ -169,6 +173,21 @@ ChartSpec candlestick = Charts.candlestick()
                 new CandlestickValue(20, 24, 18, 26),
                 new CandlestickValue(24, 22, 21, 25)
         ))
+        .build();
+
+ChartSpec radar = Charts.radar()
+        .title("Radar")
+        .indicator("Purity", 100d)
+        .indicator("Yield", 100d)
+        .value("Batch A", Arrays.asList(92d, 86d))
+        .value("Batch B", Arrays.asList(84d, 90d))
+        .build();
+
+ChartSpec funnel = Charts.funnel()
+        .title("Funnel")
+        .slice("Leads", 1200)
+        .slice("Qualified", 860)
+        .slice("Won", 170)
         .build();
 ```
 
@@ -368,7 +387,7 @@ $env:Path="$env:JAVA_HOME\bin;$env:Path"
 mvn -Pexamples compile exec:java "-Dexec.mainClass=io.github.echartsitext.example.SamplePdfMain"
 ```
 
-To generate a gallery PDF with line, pie, scatter, heatmap, candlestick, and 3D charts:
+To generate a gallery PDF with line, pie, radar, scatter, heatmap, candlestick, funnel, and 3D charts:
 
 ```powershell
 mvn -Pexamples compile exec:java "-Dexec.mainClass=io.github.echartsitext.example.GalleryPdfMain"

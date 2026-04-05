@@ -28,6 +28,7 @@ and the project intends to follow semantic versioning once the first public rele
 - Fail-fast validation tests for the public DSL, spec model, renderer, and PDF entry points
 - First-class typed `Charts.bar3D()` support with 3D axis, grid, and point models
 - First-class typed `Charts.pie()`, `Charts.heatmap()`, and `Charts.candlestick()` support
+- First-class typed `Charts.radar()` and `Charts.funnel()` support
 
 ### Changed
 
@@ -52,5 +53,5 @@ and the project intends to follow semantic versioning once the first public rele
 - `ChartSpec` now rejects mixed 2D/3D model shapes so invalid chart definitions fail early
 - `EchartsFigure.autoFormat()` now treats typed 3D chart types as PNG-first by design
 - Built-in modules now validate indices/ranges more aggressively and defensively copy nested payload values
-- Gallery and README examples now cover pie, heatmap, and candlestick charts in addition to cartesian and 3D samples
+- Gallery and README examples now cover pie, radar, funnel, heatmap, and candlestick charts in addition to cartesian and 3D samples
 - Maven project metadata now includes GitHub URL, SCM, issue tracker, and developer information for downstream consumers
