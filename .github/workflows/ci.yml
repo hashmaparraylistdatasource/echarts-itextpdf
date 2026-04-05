@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - "codex/**"
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [8, 17]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+
+      - name: Run unit tests
+        run: mvn test
+
+  examples-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 8
+          cache: maven
+
+      - name: Run examples profile tests
+        run: mvn -Pexamples test
+
+  render-service-smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: render-service/package-lock.json
+
+      - name: Install render service dependencies
+        working-directory: render-service
+        run: npm install
+
+      - name: Start render service
+        working-directory: render-service
+        run: |
+          npm start > ../render-service-smoke.log 2>&1 &
+          echo $! > ../render-service.pid
+
+      - name: Wait for health endpoint
+        shell: bash
+        run: |
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:3927/health; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Render service did not become healthy in time"
+          cat render-service-smoke.log
+          exit 1
+
+      - name: Stop render service
+        if: always()
+        shell: bash
+        run: |
+          if [ -f render-service.pid ]; then
+            kill "$(cat render-service.pid)" || true
+          fi
