@@ -1,0 +1,7 @@
+/target/
+/.idea/
+*.iml
+/.cp.txt
+/render-service/node_modules/
+/render-service/.logs/
+/examples/output/
