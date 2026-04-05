@@ -162,6 +162,21 @@ class SpecValidationTest {
                 ))
                 .build());
 
+        assertThrows(IllegalArgumentException.class, () -> ChartSpec.builder(ChartType.BOXPLOT)
+                .xAxes(Collections.singletonList(AxisSpec.builder().type("category").categories(Arrays.asList("A")).build()))
+                .yAxes(Collections.singletonList(AxisSpec.builder().type("value").build()))
+                .funnelSeries(Collections.singletonList(
+                        FunnelSeriesSpec.builder()
+                                .data(Collections.singletonList(FunnelSliceSpec.builder("A", 10).build()))
+                                .build()
+                ))
+                .boxplotSeries(Collections.singletonList(
+                        BoxplotSeriesSpec.builder()
+                                .data(Collections.singletonList(new BoxplotValue(1, 2, 3, 4, 5)))
+                                .build()
+                ))
+                .build());
+
         assertThrows(IllegalArgumentException.class, () -> ChartSpec.builder(ChartType.FUNNEL)
                 .radarSeries(Collections.singletonList(
                         RadarSeriesSpec.builder()

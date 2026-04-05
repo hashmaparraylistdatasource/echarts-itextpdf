@@ -15,6 +15,7 @@ import io.github.echartsitext.spec.ChartPoint;
 import io.github.echartsitext.spec.ChartPoint3D;
 import io.github.echartsitext.spec.CandlestickValue;
 import io.github.echartsitext.spec.ChartSpec;
+import io.github.echartsitext.spec.BoxplotValue;
 import io.github.echartsitext.spec.HeatmapPoint;
 import org.junit.jupiter.api.Test;
 
@@ -259,6 +260,28 @@ class JacksonEchartsOptionWriterTest {
         assertEquals(4, root.path("series").get(0).path("gap").asInt());
         assertEquals(170d, root.path("series").get(0).path("data").get(3).path("value").asDouble(), 0.0001d);
         assertTrue(root.path("grid").isMissingNode());
+    }
+
+    @Test
+    void shouldGenerateTypedBoxplotOption() throws Exception {
+        ChartSpec spec = Charts.boxplot()
+                .title("Boxplot Chart")
+                .categories(Arrays.asList("Lot A", "Lot B", "Lot C"))
+                .series("Spread", Arrays.asList(
+                        new BoxplotValue(7d, 9d, 11d, 13d, 16d),
+                        new BoxplotValue(6d, 8d, 10d, 12d, 14d),
+                        new BoxplotValue(8d, 10d, 12d, 14d, 17d)
+                ), series -> series.boxWidth("40%", "72%"))
+                .build();
+
+        String json = new JacksonEchartsOptionWriter().write(spec);
+        JsonNode root = new ObjectMapper().readTree(json);
+
+        assertEquals("boxplot", root.path("series").get(0).path("type").asText());
+        assertEquals("Lot A", root.path("xAxis").get(0).path("data").get(0).asText());
+        assertEquals(11d, root.path("series").get(0).path("data").get(0).get(2).asDouble(), 0.0001d);
+        assertEquals("40%", root.path("series").get(0).path("boxWidth").get(0).asText());
+        assertEquals("Spread", root.path("legend").path("data").get(0).asText());
     }
 
     @Test

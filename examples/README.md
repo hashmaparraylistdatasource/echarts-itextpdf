@@ -32,5 +32,6 @@ The gallery now includes:
 - scatter
 - heatmap
 - candlestick
+- boxplot
 - funnel
 - 3D bar

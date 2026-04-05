@@ -14,6 +14,7 @@ import io.github.echartsitext.module.VisualMaps;
 import io.github.echartsitext.pdf.EchartsFigure;
 import io.github.echartsitext.render.ChartRenderer;
 import io.github.echartsitext.render.HttpChartRenderer;
+import io.github.echartsitext.spec.BoxplotValue;
 import io.github.echartsitext.spec.CandlestickValue;
 import io.github.echartsitext.spec.ChartPoint;
 import io.github.echartsitext.spec.ChartPoint3D;
@@ -84,17 +85,23 @@ public final class GalleryPdfMain {
                             .fitWidth()
                             .caption("Figure 6. A typed candlestick chart with category labels and OHLC data.")
                             .build(),
+                    EchartsFigure.of(buildBoxplotChart())
+                            .renderer(renderer)
+                            .autoFormat()
+                            .fitWidth()
+                            .caption("Figure 7. A typed boxplot chart for five-number distribution summaries.")
+                            .build(),
                     EchartsFigure.of(buildFunnelChart())
                             .renderer(renderer)
                             .autoFormat()
                             .fitWidth()
-                            .caption("Figure 7. A typed funnel chart for staged conversion analysis.")
+                            .caption("Figure 8. A typed funnel chart for staged conversion analysis.")
                             .build(),
                     EchartsFigure.of(buildThreeDimensionalChart())
                             .renderer(renderer)
                             .autoFormat()
                             .fitWidth()
-                            .caption("Figure 8. A 3D bar chart rendered as PNG and embedded as an iText figure.")
+                            .caption("Figure 9. A 3D bar chart rendered as PNG and embedded as an iText figure.")
                             .build()
             );
 
@@ -261,6 +268,23 @@ public final class GalleryPdfMain {
                         new CandlestickValue(29, 27, 26, 32)
                 ))
                 .module(DataZoomModule.inside().start(0).end(100).build())
+                .build();
+    }
+
+    private static ChartSpec buildBoxplotChart() {
+        return Charts.boxplot()
+                .size(960, 420)
+                .layout(ChartLayouts.report())
+                .title("Boxplot Chart")
+                .xAxis(axis -> axis.name("Lot"))
+                .yAxis(axis -> axis.name("Response"))
+                .categories(Arrays.asList("Lot A", "Lot B", "Lot C", "Lot D"))
+                .series("Spread", Arrays.asList(
+                        new BoxplotValue(7d, 9d, 11d, 13d, 16d),
+                        new BoxplotValue(6d, 8d, 10d, 12d, 14d),
+                        new BoxplotValue(8d, 10d, 12d, 14d, 17d),
+                        new BoxplotValue(5d, 7d, 9d, 11d, 13d)
+                ), series -> series.boxWidth("38%", "72%"))
                 .build();
     }
 

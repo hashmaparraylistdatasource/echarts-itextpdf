@@ -43,21 +43,19 @@ First-class typed support:
 - pie
 - radar
 - funnel
+- boxplot
 - heatmap
 - candlestick
 - bar3D
 
 Experimental via `raw(...)` escape hatch:
 
-- radar
-- boxplot
 - graph
 - tree
 - treemap
 - sunburst
 - parallel
 - sankey
-- funnel
 - lines / route-like series
 
 Not yet first-class:
@@ -117,6 +115,7 @@ Current typed DSL coverage includes:
 - `Charts.pie()`
 - `Charts.radar()`
 - `Charts.funnel()`
+- `Charts.boxplot()`
 - `Charts.heatmap()`
 - `Charts.candlestick()`
 - `Charts.bar3D()`
@@ -188,6 +187,15 @@ ChartSpec funnel = Charts.funnel()
         .slice("Leads", 1200)
         .slice("Qualified", 860)
         .slice("Won", 170)
+        .build();
+
+ChartSpec boxplot = Charts.boxplot()
+        .title("Boxplot")
+        .categories(Arrays.asList("Lot A", "Lot B"))
+        .series("Spread", Arrays.asList(
+                new BoxplotValue(7d, 9d, 11d, 13d, 16d),
+                new BoxplotValue(6d, 8d, 10d, 12d, 14d)
+        ))
         .build();
 ```
 
@@ -387,7 +395,7 @@ $env:Path="$env:JAVA_HOME\bin;$env:Path"
 mvn -Pexamples compile exec:java "-Dexec.mainClass=io.github.echartsitext.example.SamplePdfMain"
 ```
 
-To generate a gallery PDF with line, pie, radar, scatter, heatmap, candlestick, funnel, and 3D charts:
+To generate a gallery PDF with line, pie, radar, scatter, heatmap, candlestick, boxplot, funnel, and 3D charts:
 
 ```powershell
 mvn -Pexamples compile exec:java "-Dexec.mainClass=io.github.echartsitext.example.GalleryPdfMain"
