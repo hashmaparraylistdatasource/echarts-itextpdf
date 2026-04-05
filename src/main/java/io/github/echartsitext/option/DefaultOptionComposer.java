@@ -64,6 +64,17 @@ final class DefaultOptionComposer implements OptionComposer {
             tree.put("series", seriesFactory.buildPieSeries(spec.getPieSeries()));
             return;
         }
+        if (spec.getRadar() != null) {
+            tree.put("radar", spec.getRadar().toOptionMap());
+        }
+        if (!spec.getRadarSeries().isEmpty()) {
+            tree.put("series", seriesFactory.buildRadarSeries(spec.getRadarSeries()));
+            return;
+        }
+        if (!spec.getFunnelSeries().isEmpty()) {
+            tree.put("series", seriesFactory.buildFunnelSeries(spec.getFunnelSeries()));
+            return;
+        }
         if (!spec.getHeatmapSeries().isEmpty()) {
             tree.put("series", seriesFactory.buildHeatmapSeries(spec.getHeatmapSeries()));
             return;

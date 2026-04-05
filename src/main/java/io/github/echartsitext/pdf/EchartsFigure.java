@@ -116,6 +116,7 @@ public final class EchartsFigure extends BlockElement<EchartsFigure> {
                 .legend(chartSpec.getLegend())
                 .tooltip(chartSpec.getTooltip())
                 .grid(chartSpec.getGrid())
+                .radar(chartSpec.getRadar())
                 .xAxis3D(chartSpec.getXAxis3D())
                 .yAxis3D(chartSpec.getYAxis3D())
                 .zAxis3D(chartSpec.getZAxis3D())
@@ -124,6 +125,8 @@ public final class EchartsFigure extends BlockElement<EchartsFigure> {
                 .yAxes(chartSpec.getYAxes())
                 .series(chartSpec.getSeries())
                 .pieSeries(chartSpec.getPieSeries())
+                .radarSeries(chartSpec.getRadarSeries())
+                .funnelSeries(chartSpec.getFunnelSeries())
                 .heatmapSeries(chartSpec.getHeatmapSeries())
                 .candlestickSeries(chartSpec.getCandlestickSeries())
                 .bar3DSeries(chartSpec.getBar3DSeries());

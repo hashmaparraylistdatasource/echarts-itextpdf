@@ -2,8 +2,10 @@ package io.github.echartsitext.option;
 
 import io.github.echartsitext.spec.Bar3DSeriesSpec;
 import io.github.echartsitext.spec.CandlestickSeriesSpec;
+import io.github.echartsitext.spec.FunnelSeriesSpec;
 import io.github.echartsitext.spec.HeatmapSeriesSpec;
 import io.github.echartsitext.spec.PieSeriesSpec;
+import io.github.echartsitext.spec.RadarSeriesSpec;
 import io.github.echartsitext.spec.SeriesSpec;
 import io.github.echartsitext.theme.ChartTheme;
 
@@ -28,6 +30,22 @@ final class SeriesOptionFactory {
     List<Map<String, Object>> buildHeatmapSeries(List<HeatmapSeriesSpec> seriesSpecs) {
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         for (HeatmapSeriesSpec spec : seriesSpecs) {
+            result.add(spec.toOptionMap());
+        }
+        return result;
+    }
+
+    List<Map<String, Object>> buildRadarSeries(List<RadarSeriesSpec> seriesSpecs) {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+        for (RadarSeriesSpec spec : seriesSpecs) {
+            result.add(spec.toOptionMap());
+        }
+        return result;
+    }
+
+    List<Map<String, Object>> buildFunnelSeries(List<FunnelSeriesSpec> seriesSpecs) {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+        for (FunnelSeriesSpec spec : seriesSpecs) {
             result.add(spec.toOptionMap());
         }
         return result;

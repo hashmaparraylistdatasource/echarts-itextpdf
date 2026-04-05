@@ -2,10 +2,14 @@ package io.github.echartsitext.option;
 
 import io.github.echartsitext.spec.AxisSpec;
 import io.github.echartsitext.spec.ChartSpec;
+import io.github.echartsitext.spec.FunnelSeriesSpec;
+import io.github.echartsitext.spec.FunnelSliceSpec;
 import io.github.echartsitext.spec.PieSeriesSpec;
 import io.github.echartsitext.spec.PieSliceSpec;
 import io.github.echartsitext.spec.GridSpec;
 import io.github.echartsitext.spec.LegendSpec;
+import io.github.echartsitext.spec.RadarSeriesSpec;
+import io.github.echartsitext.spec.RadarValueSpec;
 import io.github.echartsitext.spec.SeriesSpec;
 import io.github.echartsitext.spec.TitleSpec;
 import io.github.echartsitext.spec.TooltipSpec;
@@ -96,6 +100,24 @@ final class MetadataOptionFactory {
             LinkedHashSet<String> names = new LinkedHashSet<String>();
             for (PieSeriesSpec pieSeriesSpec : chartSpec.getPieSeries()) {
                 for (PieSliceSpec slice : pieSeriesSpec.getData()) {
+                    names.add(slice.getName());
+                }
+            }
+            return new ArrayList<String>(names);
+        }
+        if (!chartSpec.getRadarSeries().isEmpty()) {
+            LinkedHashSet<String> names = new LinkedHashSet<String>();
+            for (RadarSeriesSpec radarSeriesSpec : chartSpec.getRadarSeries()) {
+                for (RadarValueSpec value : radarSeriesSpec.getData()) {
+                    names.add(value.getName());
+                }
+            }
+            return new ArrayList<String>(names);
+        }
+        if (!chartSpec.getFunnelSeries().isEmpty()) {
+            LinkedHashSet<String> names = new LinkedHashSet<String>();
+            for (FunnelSeriesSpec funnelSeriesSpec : chartSpec.getFunnelSeries()) {
+                for (FunnelSliceSpec slice : funnelSeriesSpec.getData()) {
                     names.add(slice.getName());
                 }
             }

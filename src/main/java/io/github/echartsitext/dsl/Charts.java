@@ -25,6 +25,14 @@ public final class Charts {
         return new PieChartBuilder();
     }
 
+    public static RadarChartBuilder radar() {
+        return new RadarChartBuilder();
+    }
+
+    public static FunnelChartBuilder funnel() {
+        return new FunnelChartBuilder();
+    }
+
     public static HeatmapChartBuilder heatmap() {
         return new HeatmapChartBuilder();
     }
