@@ -1,6 +1,7 @@
 package io.github.echartsitext.option;
 
 import io.github.echartsitext.spec.Bar3DSeriesSpec;
+import io.github.echartsitext.spec.BoxplotSeriesSpec;
 import io.github.echartsitext.spec.CandlestickSeriesSpec;
 import io.github.echartsitext.spec.FunnelSeriesSpec;
 import io.github.echartsitext.spec.HeatmapSeriesSpec;
@@ -54,6 +55,14 @@ final class SeriesOptionFactory {
     List<Map<String, Object>> buildCandlestickSeries(List<CandlestickSeriesSpec> seriesSpecs) {
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         for (CandlestickSeriesSpec spec : seriesSpecs) {
+            result.add(spec.toOptionMap());
+        }
+        return result;
+    }
+
+    List<Map<String, Object>> buildBoxplotSeries(List<BoxplotSeriesSpec> seriesSpecs) {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+        for (BoxplotSeriesSpec spec : seriesSpecs) {
             result.add(spec.toOptionMap());
         }
         return result;

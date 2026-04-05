@@ -128,6 +128,11 @@ final class MetadataOptionFactory {
                     .map(series -> (String) series.toOptionMap().get("name"))
                     .collect(Collectors.toList());
         }
+        if (!chartSpec.getBoxplotSeries().isEmpty()) {
+            return chartSpec.getBoxplotSeries().stream()
+                    .map(series -> (String) series.toOptionMap().get("name"))
+                    .collect(Collectors.toList());
+        }
         if (!chartSpec.getHeatmapSeries().isEmpty()) {
             return chartSpec.getHeatmapSeries().stream()
                     .map(series -> (String) series.toOptionMap().get("name"))
@@ -145,6 +150,7 @@ final class MetadataOptionFactory {
         return !spec.getXAxes().isEmpty()
                 || !spec.getYAxes().isEmpty()
                 || !spec.getSeries().isEmpty()
+                || !spec.getBoxplotSeries().isEmpty()
                 || !spec.getHeatmapSeries().isEmpty()
                 || !spec.getCandlestickSeries().isEmpty()
                 || spec.getGrid() != null;

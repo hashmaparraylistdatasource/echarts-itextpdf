@@ -33,6 +33,10 @@ public final class Charts {
         return new FunnelChartBuilder();
     }
 
+    public static BoxplotChartBuilder boxplot() {
+        return new BoxplotChartBuilder();
+    }
+
     public static HeatmapChartBuilder heatmap() {
         return new HeatmapChartBuilder();
     }

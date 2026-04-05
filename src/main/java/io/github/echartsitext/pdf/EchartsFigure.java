@@ -127,6 +127,7 @@ public final class EchartsFigure extends BlockElement<EchartsFigure> {
                 .pieSeries(chartSpec.getPieSeries())
                 .radarSeries(chartSpec.getRadarSeries())
                 .funnelSeries(chartSpec.getFunnelSeries())
+                .boxplotSeries(chartSpec.getBoxplotSeries())
                 .heatmapSeries(chartSpec.getHeatmapSeries())
                 .candlestickSeries(chartSpec.getCandlestickSeries())
                 .bar3DSeries(chartSpec.getBar3DSeries());

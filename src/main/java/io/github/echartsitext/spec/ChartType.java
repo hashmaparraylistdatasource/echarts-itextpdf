@@ -10,6 +10,7 @@ public enum ChartType {
     PIE("pie", false),
     RADAR("radar", false),
     FUNNEL("funnel", false),
+    BOXPLOT("boxplot", false),
     HEATMAP("heatmap", false),
     CANDLESTICK("candlestick", false),
     BAR_3D("bar3D", true);
