@@ -4,6 +4,7 @@ import io.github.echartsitext.spec.AxisSpec;
 import io.github.echartsitext.spec.ChartSpec;
 import io.github.echartsitext.spec.FunnelSeriesSpec;
 import io.github.echartsitext.spec.FunnelSliceSpec;
+import io.github.echartsitext.spec.HierarchyNodeSpec;
 import io.github.echartsitext.spec.PieSeriesSpec;
 import io.github.echartsitext.spec.PieSliceSpec;
 import io.github.echartsitext.spec.GridSpec;
@@ -11,7 +12,10 @@ import io.github.echartsitext.spec.LegendSpec;
 import io.github.echartsitext.spec.RadarSeriesSpec;
 import io.github.echartsitext.spec.RadarValueSpec;
 import io.github.echartsitext.spec.SeriesSpec;
+import io.github.echartsitext.spec.SunburstSeriesSpec;
+import io.github.echartsitext.spec.TreeSeriesSpec;
 import io.github.echartsitext.spec.TitleSpec;
+import io.github.echartsitext.spec.TreemapSeriesSpec;
 import io.github.echartsitext.spec.TooltipSpec;
 import io.github.echartsitext.theme.ChartTheme;
 
@@ -123,6 +127,27 @@ final class MetadataOptionFactory {
             }
             return new ArrayList<String>(names);
         }
+        if (!chartSpec.getTreeSeries().isEmpty()) {
+            LinkedHashSet<String> names = new LinkedHashSet<String>();
+            for (TreeSeriesSpec treeSeriesSpec : chartSpec.getTreeSeries()) {
+                collectTopLevelHierarchyNames(names, treeSeriesSpec.getData());
+            }
+            return new ArrayList<String>(names);
+        }
+        if (!chartSpec.getTreemapSeries().isEmpty()) {
+            LinkedHashSet<String> names = new LinkedHashSet<String>();
+            for (TreemapSeriesSpec treemapSeriesSpec : chartSpec.getTreemapSeries()) {
+                collectTopLevelHierarchyNames(names, treemapSeriesSpec.getData());
+            }
+            return new ArrayList<String>(names);
+        }
+        if (!chartSpec.getSunburstSeries().isEmpty()) {
+            LinkedHashSet<String> names = new LinkedHashSet<String>();
+            for (SunburstSeriesSpec sunburstSeriesSpec : chartSpec.getSunburstSeries()) {
+                collectTopLevelHierarchyNames(names, sunburstSeriesSpec.getData());
+            }
+            return new ArrayList<String>(names);
+        }
         if (!chartSpec.getBar3DSeries().isEmpty()) {
             return chartSpec.getBar3DSeries().stream()
                     .map(series -> (String) series.toOptionMap().get("name"))
@@ -144,6 +169,12 @@ final class MetadataOptionFactory {
                     .collect(Collectors.toList());
         }
         return chartSpec.getSeries().stream().map(SeriesSpec::getName).collect(Collectors.toList());
+    }
+
+    private void collectTopLevelHierarchyNames(LinkedHashSet<String> names, List<HierarchyNodeSpec> nodes) {
+        for (HierarchyNodeSpec node : nodes) {
+            names.add(node.getName());
+        }
     }
 
     private boolean usesCartesianGrid(ChartSpec spec) {

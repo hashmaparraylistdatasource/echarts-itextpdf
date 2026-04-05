@@ -43,6 +43,9 @@ First-class typed support:
 - pie
 - radar
 - funnel
+- tree
+- treemap
+- sunburst
 - boxplot
 - heatmap
 - candlestick
@@ -115,6 +118,9 @@ Current typed DSL coverage includes:
 - `Charts.pie()`
 - `Charts.radar()`
 - `Charts.funnel()`
+- `Charts.tree()`
+- `Charts.treemap()`
+- `Charts.sunburst()`
 - `Charts.boxplot()`
 - `Charts.heatmap()`
 - `Charts.candlestick()`
@@ -187,6 +193,27 @@ ChartSpec funnel = Charts.funnel()
         .slice("Leads", 1200)
         .slice("Qualified", 860)
         .slice("Won", 170)
+        .build();
+
+ChartSpec tree = Charts.tree()
+        .title("Tree")
+        .branch("Portfolio", node -> node
+                .child("Automation", 42)
+                .child("Quality", 30))
+        .build();
+
+ChartSpec treemap = Charts.treemap()
+        .title("Treemap")
+        .node("Operations", 42, node -> node
+                .child("API", 18)
+                .child("Batch", 12))
+        .build();
+
+ChartSpec sunburst = Charts.sunburst()
+        .title("Sunburst")
+        .branch("Portfolio", node -> node
+                .child("Automation", 42)
+                .child("Quality", 30))
         .build();
 
 ChartSpec boxplot = Charts.boxplot()
@@ -395,7 +422,7 @@ $env:Path="$env:JAVA_HOME\bin;$env:Path"
 mvn -Pexamples compile exec:java "-Dexec.mainClass=io.github.echartsitext.example.SamplePdfMain"
 ```
 
-To generate a gallery PDF with line, pie, radar, scatter, heatmap, candlestick, boxplot, funnel, and 3D charts:
+To generate a gallery PDF with line, pie, radar, scatter, heatmap, candlestick, boxplot, funnel, tree, treemap, sunburst, and 3D charts:
 
 ```powershell
 mvn -Pexamples compile exec:java "-Dexec.mainClass=io.github.echartsitext.example.GalleryPdfMain"

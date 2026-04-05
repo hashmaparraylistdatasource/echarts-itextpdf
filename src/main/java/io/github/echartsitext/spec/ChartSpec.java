@@ -35,6 +35,9 @@ public final class ChartSpec {
     private final List<PieSeriesSpec> pieSeries;
     private final List<RadarSeriesSpec> radarSeries;
     private final List<FunnelSeriesSpec> funnelSeries;
+    private final List<TreeSeriesSpec> treeSeries;
+    private final List<TreemapSeriesSpec> treemapSeries;
+    private final List<SunburstSeriesSpec> sunburstSeries;
     private final List<BoxplotSeriesSpec> boxplotSeries;
     private final List<HeatmapSeriesSpec> heatmapSeries;
     private final List<CandlestickSeriesSpec> candlestickSeries;
@@ -47,6 +50,8 @@ public final class ChartSpec {
               Axis3DSpec xAxis3D, Axis3DSpec yAxis3D, Axis3DSpec zAxis3D, Grid3DSpec grid3D,
               List<AxisSpec> xAxes, List<AxisSpec> yAxes, List<SeriesSpec> series,
               List<PieSeriesSpec> pieSeries, List<RadarSeriesSpec> radarSeries, List<FunnelSeriesSpec> funnelSeries,
+              List<TreeSeriesSpec> treeSeries,
+              List<TreemapSeriesSpec> treemapSeries, List<SunburstSeriesSpec> sunburstSeries,
               List<BoxplotSeriesSpec> boxplotSeries,
               List<HeatmapSeriesSpec> heatmapSeries,
               List<CandlestickSeriesSpec> candlestickSeries, List<Bar3DSeriesSpec> bar3DSeries,
@@ -71,6 +76,9 @@ public final class ChartSpec {
         this.pieSeries = ValidationSupport.immutableListCopy(pieSeries, "pieSeries");
         this.radarSeries = ValidationSupport.immutableListCopy(radarSeries, "radarSeries");
         this.funnelSeries = ValidationSupport.immutableListCopy(funnelSeries, "funnelSeries");
+        this.treeSeries = ValidationSupport.immutableListCopy(treeSeries, "treeSeries");
+        this.treemapSeries = ValidationSupport.immutableListCopy(treemapSeries, "treemapSeries");
+        this.sunburstSeries = ValidationSupport.immutableListCopy(sunburstSeries, "sunburstSeries");
         this.boxplotSeries = ValidationSupport.immutableListCopy(boxplotSeries, "boxplotSeries");
         this.heatmapSeries = ValidationSupport.immutableListCopy(heatmapSeries, "heatmapSeries");
         this.candlestickSeries = ValidationSupport.immutableListCopy(candlestickSeries, "candlestickSeries");
@@ -164,6 +172,18 @@ public final class ChartSpec {
         return funnelSeries;
     }
 
+    public List<TreeSeriesSpec> getTreeSeries() {
+        return treeSeries;
+    }
+
+    public List<TreemapSeriesSpec> getTreemapSeries() {
+        return treemapSeries;
+    }
+
+    public List<SunburstSeriesSpec> getSunburstSeries() {
+        return sunburstSeries;
+    }
+
     public List<BoxplotSeriesSpec> getBoxplotSeries() {
         return boxplotSeries;
     }
@@ -192,6 +212,7 @@ public final class ChartSpec {
         if (chartType.isThreeDimensional()) {
             if (!xAxes.isEmpty() || !yAxes.isEmpty() || !series.isEmpty()
                     || !pieSeries.isEmpty() || !radarSeries.isEmpty() || !funnelSeries.isEmpty()
+                    || !treeSeries.isEmpty() || !treemapSeries.isEmpty() || !sunburstSeries.isEmpty()
                     || !boxplotSeries.isEmpty() || !heatmapSeries.isEmpty() || !candlestickSeries.isEmpty() || radar != null) {
                 throw new IllegalArgumentException("Three-dimensional chart types must not define 2D axes or non-3D series");
             }
@@ -206,6 +227,7 @@ public final class ChartSpec {
         if (chartType == ChartType.PIE) {
             if (!xAxes.isEmpty() || !yAxes.isEmpty() || !series.isEmpty()
                     || !radarSeries.isEmpty() || !funnelSeries.isEmpty()
+                    || !treeSeries.isEmpty() || !treemapSeries.isEmpty() || !sunburstSeries.isEmpty()
                     || !boxplotSeries.isEmpty() || !heatmapSeries.isEmpty() || !candlestickSeries.isEmpty() || radar != null
                     || xAxis3D != null || yAxis3D != null || zAxis3D != null || grid3D != null || !bar3DSeries.isEmpty()) {
                 throw new IllegalArgumentException("Pie charts must only define pie series");
@@ -218,6 +240,7 @@ public final class ChartSpec {
         if (chartType == ChartType.RADAR) {
             if (!xAxes.isEmpty() || !yAxes.isEmpty() || !series.isEmpty()
                     || !pieSeries.isEmpty() || !funnelSeries.isEmpty()
+                    || !treeSeries.isEmpty() || !treemapSeries.isEmpty() || !sunburstSeries.isEmpty()
                     || !boxplotSeries.isEmpty() || !heatmapSeries.isEmpty() || !candlestickSeries.isEmpty()
                     || xAxis3D != null || yAxis3D != null || zAxis3D != null || grid3D != null || !bar3DSeries.isEmpty()) {
                 throw new IllegalArgumentException("Radar charts must only define a typed radar coordinate and radar series");
@@ -230,6 +253,7 @@ public final class ChartSpec {
         if (chartType == ChartType.FUNNEL) {
             if (!xAxes.isEmpty() || !yAxes.isEmpty() || !series.isEmpty()
                     || !pieSeries.isEmpty() || !radarSeries.isEmpty()
+                    || !treeSeries.isEmpty() || !treemapSeries.isEmpty() || !sunburstSeries.isEmpty()
                     || !boxplotSeries.isEmpty() || !heatmapSeries.isEmpty() || !candlestickSeries.isEmpty() || radar != null
                     || xAxis3D != null || yAxis3D != null || zAxis3D != null || grid3D != null || !bar3DSeries.isEmpty()) {
                 throw new IllegalArgumentException("Funnel charts must only define typed funnel series");
@@ -239,8 +263,48 @@ public final class ChartSpec {
             }
             throw new IllegalArgumentException("Funnel charts require at least one typed funnel series");
         }
+        if (chartType == ChartType.TREE) {
+            if (!xAxes.isEmpty() || !yAxes.isEmpty() || !series.isEmpty()
+                    || !pieSeries.isEmpty() || !radarSeries.isEmpty() || !funnelSeries.isEmpty()
+                    || !treemapSeries.isEmpty() || !sunburstSeries.isEmpty() || !boxplotSeries.isEmpty()
+                    || !heatmapSeries.isEmpty() || !candlestickSeries.isEmpty() || radar != null
+                    || xAxis3D != null || yAxis3D != null || zAxis3D != null || grid3D != null || !bar3DSeries.isEmpty()) {
+                throw new IllegalArgumentException("Tree charts must only define typed tree series");
+            }
+            if (treeSeries.isEmpty()) {
+                throw new IllegalArgumentException("Tree charts require at least one typed tree series");
+            }
+            return;
+        }
+        if (chartType == ChartType.TREEMAP) {
+            if (!xAxes.isEmpty() || !yAxes.isEmpty() || !series.isEmpty()
+                    || !pieSeries.isEmpty() || !radarSeries.isEmpty() || !funnelSeries.isEmpty()
+                    || !treeSeries.isEmpty() || !sunburstSeries.isEmpty() || !boxplotSeries.isEmpty() || !heatmapSeries.isEmpty()
+                    || !candlestickSeries.isEmpty() || radar != null
+                    || xAxis3D != null || yAxis3D != null || zAxis3D != null || grid3D != null || !bar3DSeries.isEmpty()) {
+                throw new IllegalArgumentException("Treemap charts must only define typed treemap series");
+            }
+            if (treemapSeries.isEmpty()) {
+                throw new IllegalArgumentException("Treemap charts require at least one typed treemap series");
+            }
+            return;
+        }
+        if (chartType == ChartType.SUNBURST) {
+            if (!xAxes.isEmpty() || !yAxes.isEmpty() || !series.isEmpty()
+                    || !pieSeries.isEmpty() || !radarSeries.isEmpty() || !funnelSeries.isEmpty()
+                    || !treeSeries.isEmpty() || !treemapSeries.isEmpty() || !boxplotSeries.isEmpty() || !heatmapSeries.isEmpty()
+                    || !candlestickSeries.isEmpty() || radar != null
+                    || xAxis3D != null || yAxis3D != null || zAxis3D != null || grid3D != null || !bar3DSeries.isEmpty()) {
+                throw new IllegalArgumentException("Sunburst charts must only define typed sunburst series");
+            }
+            if (sunburstSeries.isEmpty()) {
+                throw new IllegalArgumentException("Sunburst charts require at least one typed sunburst series");
+            }
+            return;
+        }
         if (chartType == ChartType.BOXPLOT) {
             if (!series.isEmpty() || !pieSeries.isEmpty() || !radarSeries.isEmpty() || !funnelSeries.isEmpty()
+                    || !treeSeries.isEmpty() || !treemapSeries.isEmpty() || !sunburstSeries.isEmpty()
                     || !heatmapSeries.isEmpty() || !candlestickSeries.isEmpty() || radar != null
                     || xAxis3D != null || yAxis3D != null || zAxis3D != null || grid3D != null || !bar3DSeries.isEmpty()) {
                 throw new IllegalArgumentException("Boxplot charts must only define 2D axes and typed boxplot series");
@@ -252,6 +316,7 @@ public final class ChartSpec {
         }
         if (chartType == ChartType.HEATMAP) {
             if (!series.isEmpty() || !pieSeries.isEmpty() || !radarSeries.isEmpty() || !funnelSeries.isEmpty()
+                    || !treeSeries.isEmpty() || !treemapSeries.isEmpty() || !sunburstSeries.isEmpty()
                     || !boxplotSeries.isEmpty()
                     || !candlestickSeries.isEmpty() || radar != null
                     || xAxis3D != null || yAxis3D != null || zAxis3D != null || grid3D != null || !bar3DSeries.isEmpty()) {
@@ -264,6 +329,7 @@ public final class ChartSpec {
         }
         if (chartType == ChartType.CANDLESTICK) {
             if (!series.isEmpty() || !pieSeries.isEmpty() || !radarSeries.isEmpty() || !funnelSeries.isEmpty()
+                    || !treeSeries.isEmpty() || !treemapSeries.isEmpty() || !sunburstSeries.isEmpty()
                     || !boxplotSeries.isEmpty()
                     || !heatmapSeries.isEmpty() || radar != null
                     || xAxis3D != null || yAxis3D != null || zAxis3D != null || grid3D != null || !bar3DSeries.isEmpty()) {
@@ -278,7 +344,8 @@ public final class ChartSpec {
             throw new IllegalArgumentException("Two-dimensional chart types must not define 3D axes, grid, or 3D series");
         }
         if (radar != null || !pieSeries.isEmpty() || !radarSeries.isEmpty()
-                || !funnelSeries.isEmpty() || !boxplotSeries.isEmpty() || !heatmapSeries.isEmpty() || !candlestickSeries.isEmpty()) {
+                || !funnelSeries.isEmpty() || !treeSeries.isEmpty() || !treemapSeries.isEmpty() || !sunburstSeries.isEmpty()
+                || !boxplotSeries.isEmpty() || !heatmapSeries.isEmpty() || !candlestickSeries.isEmpty()) {
             throw new IllegalArgumentException("Cartesian chart types must not define specialized non-cartesian series families");
         }
     }
@@ -307,6 +374,9 @@ public final class ChartSpec {
         private List<PieSeriesSpec> pieSeries = Collections.emptyList();
         private List<RadarSeriesSpec> radarSeries = Collections.emptyList();
         private List<FunnelSeriesSpec> funnelSeries = Collections.emptyList();
+        private List<TreeSeriesSpec> treeSeries = Collections.emptyList();
+        private List<TreemapSeriesSpec> treemapSeries = Collections.emptyList();
+        private List<SunburstSeriesSpec> sunburstSeries = Collections.emptyList();
         private List<BoxplotSeriesSpec> boxplotSeries = Collections.emptyList();
         private List<HeatmapSeriesSpec> heatmapSeries = Collections.emptyList();
         private List<CandlestickSeriesSpec> candlestickSeries = Collections.emptyList();
@@ -413,6 +483,21 @@ public final class ChartSpec {
             return this;
         }
 
+        public Builder treeSeries(List<TreeSeriesSpec> treeSeries) {
+            this.treeSeries = ValidationSupport.mutableListCopy(treeSeries, "treeSeries");
+            return this;
+        }
+
+        public Builder treemapSeries(List<TreemapSeriesSpec> treemapSeries) {
+            this.treemapSeries = ValidationSupport.mutableListCopy(treemapSeries, "treemapSeries");
+            return this;
+        }
+
+        public Builder sunburstSeries(List<SunburstSeriesSpec> sunburstSeries) {
+            this.sunburstSeries = ValidationSupport.mutableListCopy(sunburstSeries, "sunburstSeries");
+            return this;
+        }
+
         public Builder boxplotSeries(List<BoxplotSeriesSpec> boxplotSeries) {
             this.boxplotSeries = ValidationSupport.mutableListCopy(boxplotSeries, "boxplotSeries");
             return this;
@@ -449,7 +534,8 @@ public final class ChartSpec {
         public ChartSpec build() {
             return new ChartSpec(chartType, width, height, backgroundColor, theme, title, legend, tooltip, grid, radar,
                     xAxis3D, yAxis3D, zAxis3D, grid3D, xAxes, yAxes, series,
-                    pieSeries, radarSeries, funnelSeries, boxplotSeries, heatmapSeries, candlestickSeries, bar3DSeries, modules, extensions);
+                    pieSeries, radarSeries, funnelSeries, treeSeries, treemapSeries, sunburstSeries, boxplotSeries,
+                    heatmapSeries, candlestickSeries, bar3DSeries, modules, extensions);
         }
     }
 }

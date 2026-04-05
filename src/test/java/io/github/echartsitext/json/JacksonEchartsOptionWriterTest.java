@@ -17,6 +17,7 @@ import io.github.echartsitext.spec.CandlestickValue;
 import io.github.echartsitext.spec.ChartSpec;
 import io.github.echartsitext.spec.BoxplotValue;
 import io.github.echartsitext.spec.HeatmapPoint;
+import io.github.echartsitext.spec.HierarchyNodeSpec;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -259,6 +260,81 @@ class JacksonEchartsOptionWriterTest {
         assertEquals("Qualified", root.path("legend").path("data").get(1).asText());
         assertEquals(4, root.path("series").get(0).path("gap").asInt());
         assertEquals(170d, root.path("series").get(0).path("data").get(3).path("value").asDouble(), 0.0001d);
+        assertTrue(root.path("grid").isMissingNode());
+    }
+
+    @Test
+    void shouldGenerateTypedTreemapOption() throws Exception {
+        ChartSpec spec = Charts.treemap()
+                .title("Treemap Chart")
+                .node("Operations", 42, node -> node
+                        .child("API", 18)
+                        .child("Batch", 12)
+                        .child("Manual", 12))
+                .node("Quality", 28, node -> node
+                        .child("Review", 11)
+                        .child("Audit", 9)
+                        .child("Deviation", 8))
+                .series(series -> series.leafDepth(1).breadcrumbShow(Boolean.TRUE))
+                .build();
+
+        String json = new JacksonEchartsOptionWriter().write(spec);
+        JsonNode root = new ObjectMapper().readTree(json);
+
+        assertEquals("treemap", root.path("series").get(0).path("type").asText());
+        assertEquals("Operations", root.path("series").get(0).path("data").get(0).path("name").asText());
+        assertEquals(12d, root.path("series").get(0).path("data").get(0).path("children").get(2).path("value").asDouble(), 0.0001d);
+        assertEquals(1, root.path("series").get(0).path("leafDepth").asInt());
+        assertTrue(root.path("grid").isMissingNode());
+    }
+
+    @Test
+    void shouldGenerateTypedTreeOption() throws Exception {
+        ChartSpec spec = Charts.tree()
+                .title("Tree Chart")
+                .branch("Portfolio", node -> node
+                        .branch("Automation", child -> child
+                                .child("API", 18)
+                                .child("Batch", 24))
+                        .branch("Quality", child -> child
+                                .child("Audit", 16)
+                                .child("Review", 14)))
+                .series(series -> series.orient("LR").symbolSize(12))
+                .build();
+
+        String json = new JacksonEchartsOptionWriter().write(spec);
+        JsonNode root = new ObjectMapper().readTree(json);
+
+        assertEquals("tree", root.path("series").get(0).path("type").asText());
+        assertEquals("Portfolio", root.path("series").get(0).path("data").get(0).path("name").asText());
+        assertEquals("Automation", root.path("series").get(0).path("data").get(0).path("children").get(0).path("name").asText());
+        assertEquals("LR", root.path("series").get(0).path("orient").asText());
+        assertEquals(12, root.path("series").get(0).path("symbolSize").asInt());
+        assertTrue(root.path("grid").isMissingNode());
+    }
+
+    @Test
+    void shouldGenerateTypedSunburstOption() throws Exception {
+        ChartSpec spec = Charts.sunburst()
+                .title("Sunburst Chart")
+                .branch("Portfolio", node -> node
+                        .child("Automation", 42, child -> child
+                                .child("API", 18)
+                                .child("Batch", 24))
+                        .child("Quality", 30, child -> child
+                                .child("Audit", 16)
+                                .child("Review", 14)))
+                .series(series -> series.radius("10%", "78%").labelRotate("tangential"))
+                .build();
+
+        String json = new JacksonEchartsOptionWriter().write(spec);
+        JsonNode root = new ObjectMapper().readTree(json);
+
+        assertEquals("sunburst", root.path("series").get(0).path("type").asText());
+        assertEquals("Portfolio", root.path("series").get(0).path("data").get(0).path("name").asText());
+        assertEquals("Automation", root.path("series").get(0).path("data").get(0).path("children").get(0).path("name").asText());
+        assertEquals("10%", root.path("series").get(0).path("radius").get(0).asText());
+        assertEquals("tangential", root.path("series").get(0).path("label").path("rotate").asText());
         assertTrue(root.path("grid").isMissingNode());
     }
 

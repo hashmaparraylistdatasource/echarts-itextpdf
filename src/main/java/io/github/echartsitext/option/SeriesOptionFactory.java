@@ -8,6 +8,9 @@ import io.github.echartsitext.spec.HeatmapSeriesSpec;
 import io.github.echartsitext.spec.PieSeriesSpec;
 import io.github.echartsitext.spec.RadarSeriesSpec;
 import io.github.echartsitext.spec.SeriesSpec;
+import io.github.echartsitext.spec.SunburstSeriesSpec;
+import io.github.echartsitext.spec.TreeSeriesSpec;
+import io.github.echartsitext.spec.TreemapSeriesSpec;
 import io.github.echartsitext.theme.ChartTheme;
 
 import java.util.ArrayList;
@@ -47,6 +50,30 @@ final class SeriesOptionFactory {
     List<Map<String, Object>> buildFunnelSeries(List<FunnelSeriesSpec> seriesSpecs) {
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         for (FunnelSeriesSpec spec : seriesSpecs) {
+            result.add(spec.toOptionMap());
+        }
+        return result;
+    }
+
+    List<Map<String, Object>> buildTreemapSeries(List<TreemapSeriesSpec> seriesSpecs) {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+        for (TreemapSeriesSpec spec : seriesSpecs) {
+            result.add(spec.toOptionMap());
+        }
+        return result;
+    }
+
+    List<Map<String, Object>> buildSunburstSeries(List<SunburstSeriesSpec> seriesSpecs) {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+        for (SunburstSeriesSpec spec : seriesSpecs) {
+            result.add(spec.toOptionMap());
+        }
+        return result;
+    }
+
+    List<Map<String, Object>> buildTreeSeries(List<TreeSeriesSpec> seriesSpecs) {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+        for (TreeSeriesSpec spec : seriesSpecs) {
             result.add(spec.toOptionMap());
         }
         return result;

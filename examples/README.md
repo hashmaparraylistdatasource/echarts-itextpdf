@@ -34,4 +34,7 @@ The gallery now includes:
 - candlestick
 - boxplot
 - funnel
+- tree
+- treemap
+- sunburst
 - 3D bar

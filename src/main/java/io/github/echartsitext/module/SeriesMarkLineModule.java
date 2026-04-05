@@ -2,6 +2,7 @@ package io.github.echartsitext.module;
 
 import io.github.echartsitext.internal.ValidationSupport;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;

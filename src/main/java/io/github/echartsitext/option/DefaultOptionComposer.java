@@ -75,6 +75,18 @@ final class DefaultOptionComposer implements OptionComposer {
             tree.put("series", seriesFactory.buildFunnelSeries(spec.getFunnelSeries()));
             return;
         }
+        if (!spec.getTreeSeries().isEmpty()) {
+            tree.put("series", seriesFactory.buildTreeSeries(spec.getTreeSeries()));
+            return;
+        }
+        if (!spec.getTreemapSeries().isEmpty()) {
+            tree.put("series", seriesFactory.buildTreemapSeries(spec.getTreemapSeries()));
+            return;
+        }
+        if (!spec.getSunburstSeries().isEmpty()) {
+            tree.put("series", seriesFactory.buildSunburstSeries(spec.getSunburstSeries()));
+            return;
+        }
         if (!spec.getBoxplotSeries().isEmpty()) {
             tree.put("series", seriesFactory.buildBoxplotSeries(spec.getBoxplotSeries()));
             return;

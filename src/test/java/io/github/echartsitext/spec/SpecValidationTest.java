@@ -162,6 +162,42 @@ class SpecValidationTest {
                 ))
                 .build());
 
+        assertThrows(IllegalArgumentException.class, () -> ChartSpec.builder(ChartType.TREEMAP)
+                .treemapSeries(Collections.singletonList(
+                        TreemapSeriesSpec.builder()
+                                .data(Collections.singletonList(
+                                        HierarchyNodeSpec.builder("Operations").value(42).build()
+                                ))
+                                .build()
+                ))
+                .sunburstSeries(Collections.singletonList(
+                        SunburstSeriesSpec.builder()
+                                .data(Collections.singletonList(
+                                        HierarchyNodeSpec.builder("Portfolio").value(40).build()
+                                ))
+                                .build()
+                ))
+                .build());
+
+        assertThrows(IllegalArgumentException.class, () -> ChartSpec.builder(ChartType.TREE)
+                .treeSeries(Collections.singletonList(
+                        TreeSeriesSpec.builder()
+                                .data(Collections.singletonList(
+                                        HierarchyNodeSpec.builder("Portfolio")
+                                                .branch("Automation", child -> child.child("API", 18))
+                                                .build()
+                                ))
+                                .build()
+                ))
+                .sunburstSeries(Collections.singletonList(
+                        SunburstSeriesSpec.builder()
+                                .data(Collections.singletonList(
+                                        HierarchyNodeSpec.builder("Portfolio").value(40).build()
+                                ))
+                                .build()
+                ))
+                .build());
+
         assertThrows(IllegalArgumentException.class, () -> ChartSpec.builder(ChartType.BOXPLOT)
                 .xAxes(Collections.singletonList(AxisSpec.builder().type("category").categories(Arrays.asList("A")).build()))
                 .yAxes(Collections.singletonList(AxisSpec.builder().type("value").build()))
@@ -186,6 +222,17 @@ class SpecValidationTest {
                 .funnelSeries(Collections.singletonList(
                         FunnelSeriesSpec.builder()
                                 .data(Collections.singletonList(FunnelSliceSpec.builder("A", 10).build()))
+                                .build()
+                ))
+                .build());
+
+        assertThrows(IllegalArgumentException.class, () -> ChartSpec.builder(ChartType.SUNBURST)
+                .xAxes(Collections.singletonList(AxisSpec.builder().type("category").categories(Arrays.asList("A")).build()))
+                .sunburstSeries(Collections.singletonList(
+                        SunburstSeriesSpec.builder()
+                                .data(Collections.singletonList(
+                                        HierarchyNodeSpec.builder("Portfolio").value(40).build()
+                                ))
                                 .build()
                 ))
                 .build());

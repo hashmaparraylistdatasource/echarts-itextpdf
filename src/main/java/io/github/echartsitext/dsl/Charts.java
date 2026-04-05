@@ -33,6 +33,18 @@ public final class Charts {
         return new FunnelChartBuilder();
     }
 
+    public static TreeChartBuilder tree() {
+        return new TreeChartBuilder();
+    }
+
+    public static TreemapChartBuilder treemap() {
+        return new TreemapChartBuilder();
+    }
+
+    public static SunburstChartBuilder sunburst() {
+        return new SunburstChartBuilder();
+    }
+
     public static BoxplotChartBuilder boxplot() {
         return new BoxplotChartBuilder();
     }

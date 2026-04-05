@@ -97,11 +97,29 @@ public final class GalleryPdfMain {
                             .fitWidth()
                             .caption("Figure 8. A typed funnel chart for staged conversion analysis.")
                             .build(),
+                    EchartsFigure.of(buildTreeChart())
+                            .renderer(renderer)
+                            .autoFormat()
+                            .fitWidth()
+                            .caption("Figure 9. A typed tree chart for directional hierarchical structures.")
+                            .build(),
+                    EchartsFigure.of(buildTreemapChart())
+                            .renderer(renderer)
+                            .autoFormat()
+                            .fitWidth()
+                            .caption("Figure 10. A typed treemap chart for nested area-based comparisons.")
+                            .build(),
+                    EchartsFigure.of(buildSunburstChart())
+                            .renderer(renderer)
+                            .autoFormat()
+                            .fitWidth()
+                            .caption("Figure 11. A typed sunburst chart for hierarchical radial breakdowns.")
+                            .build(),
                     EchartsFigure.of(buildThreeDimensionalChart())
                             .renderer(renderer)
                             .autoFormat()
                             .fitWidth()
-                            .caption("Figure 9. A 3D bar chart rendered as PNG and embedded as an iText figure.")
+                            .caption("Figure 12. A 3D bar chart rendered as PNG and embedded as an iText figure.")
                             .build()
             );
 
@@ -298,6 +316,62 @@ public final class GalleryPdfMain {
                 .slice("Negotiation", 280)
                 .slice("Won", 170)
                 .series(series -> series.gap(4).sort("descending"))
+                .build();
+    }
+
+    private static ChartSpec buildTreeChart() {
+        return Charts.tree()
+                .size(900, 500)
+                .title("Tree Chart")
+                .branch("Portfolio", node -> node
+                        .branch("Automation", child -> child
+                                .child("API", 18)
+                                .child("Batch", 24))
+                        .branch("Quality", child -> child
+                                .child("Audit", 16)
+                                .child("Review", 14))
+                        .branch("Release", child -> child
+                                .child("Approval", 9)
+                                .child("Archive", 7)))
+                .series(series -> series.orient("LR").symbolSize(12))
+                .build();
+    }
+
+    private static ChartSpec buildTreemapChart() {
+        return Charts.treemap()
+                .size(820, 480)
+                .title("Treemap Chart")
+                .node("Operations", 42, node -> node
+                        .child("API", 18)
+                        .child("Batch", 12)
+                        .child("Manual", 12))
+                .node("Quality", 28, node -> node
+                        .child("Review", 11)
+                        .child("Audit", 9)
+                        .child("Deviation", 8))
+                .node("Release", 18, node -> node
+                        .child("Packaging", 7)
+                        .child("Approval", 6)
+                        .child("Archive", 5))
+                .series(series -> series.leafDepth(1).breadcrumbShow(Boolean.TRUE))
+                .build();
+    }
+
+    private static ChartSpec buildSunburstChart() {
+        return Charts.sunburst()
+                .size(820, 500)
+                .title("Sunburst Chart")
+                .branch("Portfolio", node -> node
+                        .branch("Automation", child -> child
+                                .child("API", 18)
+                                .child("Batch", 24))
+                        .branch("Quality", child -> child
+                                .child("Audit", 16)
+                                .child("Review", 14))
+                        .branch("Release", child -> child
+                                .child("Approval", 9)
+                                .child("Archive", 7)))
+                .series(series -> series.radius("10%", "78%").labelRotate("tangential"))
                 .build();
     }
 
