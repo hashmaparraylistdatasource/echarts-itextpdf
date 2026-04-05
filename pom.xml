@@ -1,38 +1,42 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.echartsitext</groupId>
     <artifactId>echarts-itextpdf</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
     <name>echarts-itextpdf</name>
-    <description>Typed ECharts-to-iText PDF integration for Java.</description>
+    <description>Open-source ECharts option builder and iText PDF integration for Java.</description>
     <url>https://github.com/hashmaparraylistdatasource/echarts-itextpdf</url>
 
-    <licenses>
-        <license>
-            <name>GNU Affero General Public License v3.0 or later</name>
-            <url>https://www.gnu.org/licenses/agpl-3.0.html</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+    <scm>
+        <connection>scm:git:https://github.com/hashmaparraylistdatasource/echarts-itextpdf.git</connection>
+        <developerConnection>scm:git:https://github.com/hashmaparraylistdatasource/echarts-itextpdf.git</developerConnection>
+        <url>https://github.com/hashmaparraylistdatasource/echarts-itextpdf</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/hashmaparraylistdatasource/echarts-itextpdf/issues</url>
+    </issueManagement>
 
     <developers>
         <developer>
             <id>hashmaparraylistdatasource</id>
             <name>hashmaparraylistdatasource</name>
+            <url>https://github.com/hashmaparraylistdatasource</url>
         </developer>
     </developers>
 
-    <scm>
-        <connection>scm:git:git://github.com/hashmaparraylistdatasource/echarts-itextpdf.git</connection>
-        <developerConnection>scm:git:ssh://github.com:hashmaparraylistdatasource/echarts-itextpdf.git</developerConnection>
-        <url>https://github.com/hashmaparraylistdatasource/echarts-itextpdf</url>
-        <tag>HEAD</tag>
-    </scm>
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License v3.0 or later</name>
+            <url>https://www.gnu.org/licenses/agpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -55,6 +59,7 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -81,7 +86,7 @@
                 <configuration>
                     <useModulePath>false</useModulePath>
                     <excludes>
-                        <exclude>**/example/**/*.java</exclude>
+                        <exclude>**/io/github/echartsitext/example/**/*.class</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -109,7 +114,7 @@
                         <id>attach-sources</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>

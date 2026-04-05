@@ -10,6 +10,7 @@ and the project intends to follow semantic versioning once the first public rele
 ### Added
 
 - Typed chart DSL and immutable chart spec model
+- Public repository badges and a clearer README support matrix
 - Option composition layer with typed modules and layout presets
 - Incrementally customizable `ChartLayoutProfile` objects with `toBuilder()` support
 - Native-feeling iText `EchartsFigure` support
@@ -52,3 +53,4 @@ and the project intends to follow semantic versioning once the first public rele
 - `EchartsFigure.autoFormat()` now treats typed 3D chart types as PNG-first by design
 - Built-in modules now validate indices/ranges more aggressively and defensively copy nested payload values
 - Gallery and README examples now cover pie, heatmap, and candlestick charts in addition to cartesian and 3D samples
+- Maven project metadata now includes GitHub URL, SCM, issue tracker, and developer information for downstream consumers

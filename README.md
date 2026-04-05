@@ -1,5 +1,10 @@
 # echarts-itextpdf
 
+[![CI](https://github.com/hashmaparraylistdatasource/echarts-itextpdf/actions/workflows/ci.yml/badge.svg)](https://github.com/hashmaparraylistdatasource/echarts-itextpdf/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/hashmaparraylistdatasource/echarts-itextpdf)](https://github.com/hashmaparraylistdatasource/echarts-itextpdf/blob/main/LICENSE)
+![Java 8+](https://img.shields.io/badge/Java-8%2B-blue)
+![Status](https://img.shields.io/badge/status-public%20alpha-orange)
+
 `echarts-itextpdf` is a Java 8+ library that helps you:
 
 - build ECharts options with a fluent Java DSL
@@ -27,6 +32,36 @@ More detailed project positioning and architecture notes live in:
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 - [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 - [SECURITY.md](SECURITY.md)
+
+## Support matrix
+
+First-class typed support:
+
+- line
+- bar
+- scatter
+- pie
+- heatmap
+- candlestick
+- bar3D
+
+Experimental via `raw(...)` escape hatch:
+
+- radar
+- boxplot
+- graph
+- tree
+- treemap
+- sunburst
+- parallel
+- sankey
+- funnel
+- lines / route-like series
+
+Not yet first-class:
+
+- geo / map registration workflows
+- higher-level report blocks such as chart + result table composites
 
 ## Project maturity
 
@@ -195,6 +230,16 @@ These layout defaults now also apply to additional axes that are added later wit
 `addXAxis(...)` and `addYAxis(...)`, so dual-axis charts keep one consistent layout profile.
 
 ## Quick start
+
+Add the dependency:
+
+```xml
+<dependency>
+    <groupId>io.github.echartsitext</groupId>
+    <artifactId>echarts-itextpdf</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+</dependency>
+```
 
 ```java
 ChartSpec chart = Charts.line()
